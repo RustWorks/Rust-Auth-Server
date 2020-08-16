@@ -1,28 +1,9 @@
 use super::schema::*;
 use diesel::{r2d2::ConnectionManager, PgConnection};
+use serde::{Deserialize, Serialize};
 
 // type alias to use in multiple places
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
-
-#[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
-#[table_name = "invitations"]
-pub struct Invitation {
-    pub id: uuid::Uuid,
-    pub email: String,
-    pub expires_at: chrono::NaiveDateTime,
-}
-
-// any type that implements Into<String> can be used to create Invitation
-impl<T> From<T> for Invitation where
-T: Into<String> {
-     fn from(email: T) -> Self {
-        Invitation {
-            id: uuid::Uuid::new_v4(),
-            email: email.into(),
-            expires_at: chrono::Local::now().naive_local() + chrono::Duration::hours(24),
-        }
-    }
-}
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name = "users"]
@@ -38,6 +19,28 @@ impl User {
             email: email.into(),
             hash: pwd.into(),
             created_at: chrono::Local::now().naive_local(),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
+#[table_name = "invitations"]
+pub struct Invitation {
+    pub id: uuid::Uuid,
+    pub email: String,
+    pub expires_at: chrono::NaiveDateTime,
+}
+
+// any type that implements Into<String> can be used to create Invitation
+impl<T> From<T> for Invitation
+where
+    T: Into<String>,
+{
+    fn from(email: T) -> Self {
+        Invitation {
+            id: uuid::Uuid::new_v4(),
+            email: email.into(),
+            expires_at: chrono::Local::now().naive_local() + chrono::Duration::hours(24),
         }
     }
 }

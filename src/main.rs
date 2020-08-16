@@ -1,7 +1,5 @@
 #[macro_use]
 extern crate diesel;
-#[macro_use]
-extern crate serde_derive;
 
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::{middleware, web, App, HttpServer};
@@ -17,9 +15,13 @@ mod register_handler;
 mod schema;
 mod utils;
 
-fn main() -> std::io::Result<()> {
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
     dotenv::dotenv().ok();
-    std::env::set_var("RUST_LOG", "actix_web=info,actix_server=info");
+    std::env::set_var(
+        "RUST_LOG",
+        "simple-auth-server=debug,actix_web=info,actix_server=info",
+    );
     env_logger::init();
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
@@ -45,19 +47,20 @@ fn main() -> std::io::Result<()> {
                     .secure(false), // this can only be true if you have https
             ))
             .data(web::JsonConfig::default().limit(4096))
+            // everything under '/api/' route
             .service(
                 web::scope("/api")
                     .service(
                         web::resource("/invitation")
-                            .route(web::post().to_async(invitation_handler::post_invitation)),
+                            .route(web::post().to(invitation_handler::post_invitation)),
                     )
                     .service(
                         web::resource("/register/{invitation_id}")
-                            .route(web::post().to_async(register_handler::register_user)),
+                            .route(web::post().to(register_handler::register_user)),
                     )
                     .service(
                         web::resource("/auth")
-                            .route(web::post().to_async(auth_handler::login))
+                            .route(web::post().to(auth_handler::login))
                             .route(web::delete().to(auth_handler::logout))
                             .route(web::get().to(auth_handler::get_me)),
                     ),
@@ -65,4 +68,5 @@ fn main() -> std::io::Result<()> {
     })
     .bind("127.0.0.1:3000")?
     .run()
+    .await
 }
