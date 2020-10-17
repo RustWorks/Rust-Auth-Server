@@ -1,4 +1,4 @@
-## Auth Web Microservice with rust using Actix-Web 1.0
+## Auth Web Microservice with rust using Actix-Web 3.0
 
 ##### Flow of the event would look like this:
 
@@ -29,5 +29,5 @@
 
 Read the full tutorial series on [gill.net.in](https://gill.net.in)
 
-- [Auth Web Microservice with rust using Actix-Web 1.0 - Complete Tutorial](https://gill.net.in/posts/auth-microservice-rust-actix-web1.0-diesel-complete-tutorial/)
+- [Auth Web Microservice with rust using Actix-Web 3.0 - Complete Tutorial](https://gill.net.in/posts/auth-microservice-rust-actix-web1.0-diesel-complete-tutorial/)
 
