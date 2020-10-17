@@ -43,7 +43,7 @@ async fn main() -> std::io::Result<()> {
                     .name("auth")
                     .path("/")
                     .domain(domain.as_str())
-                    .max_age_time(chrono::Duration::days(1))
+                    .max_age(86400) // one day in seconds
                     .secure(false), // this can only be true if you have https
             ))
             .data(web::JsonConfig::default().limit(4096))
