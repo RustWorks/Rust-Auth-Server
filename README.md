@@ -1,4 +1,4 @@
-## Auth Web Microservice with rust using Actix-Web 3.0
+# Auth Web Microservice with rust using Actix-Web 3.0
 
 ##### Flow of the event would look like this:
 
@@ -26,8 +26,6 @@
 - [sparkpost](https://crates.io/crates/sparkpost) // Rust bindings for sparkpost email api v1.
 - [uuid](https://crates.io/crates/uuid) // A library to generate and parse UUIDs.
 
-
 Read the full tutorial series on [gill.net.in](https://gill.net.in)
 
 - [Auth Web Microservice with rust using Actix-Web 3.0 - Complete Tutorial](https://gill.net.in/posts/auth-microservice-rust-actix-web1.0-diesel-complete-tutorial/)
-
