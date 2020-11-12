@@ -1,5 +1,7 @@
 # Auth Web Microservice with rust using Actix-Web 3.0
 
+Original Repository: https://gitlab.com/mygnu/rust-auth-server
+
 ##### Flow of the event would look like this:
 
 - Registers with email address ➡ Receive an 📨 with a link to verify
